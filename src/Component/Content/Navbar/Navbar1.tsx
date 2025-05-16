@@ -88,11 +88,11 @@ const Navbar1 = () => {
     return (
         <>
             <Favicon url={"https://ppim.pea.co.th/images/pea-logo.png"} />
-            <nav className="container flex justify-between  items-center top-0 relative p-2 bg-fuchsia-600">
+            <nav className="container flex justify-between  items-center top-0 relative p-2 bg-green-600">
                 <div className="w-full flex ">
                     <div className="flex justify-center flex-col items-center text-white font-bold">
                         <div className="text-3xl">
-                            PEA
+                            Wongnok
                         </div>
                         {/* <div className="text-sm">
                             ผสม.กสฟ.ต.1
@@ -114,74 +114,17 @@ const Navbar1 = () => {
                                     </div>
                                     {isOpen[0] && <div className='Subheader1' >
                                         <div className="m-2 text-black hover:bg-slate-200" >
-                                            <Link to={'/About/JobDescription'} className="mx-0 text-black no-underline">JobDescription</Link>
+                                            <Link to={'/About/Menu'} className="mx-0 text-black no-underline">รายการเมนูอาหาร</Link>
                                         </div>
-                                        <div className="m-2 text-black hover:bg-slate-200">
+                                        {/* <div className="m-2 text-black hover:bg-slate-200">
                                             <Link to={'/About/Personel'} className="mx-0 text-black no-underline">บุคลากรในแผนก</Link>
-                                        </div>
+                                        </div> */}
                                     </div>}
 
                                 </div>
                             </div>
 
-                            <div className="BarMenu relative">
-                                <div className="flex justify-center flex-col hover:cursor-pointer">
-                                    <div onClick={(e) => Active_class(1)}
-                                        ref={dropdown}
-                                    >
-                                        รายงาน
-                                    </div>
-                                    {isOpen[1] && <div className='Subheader1' ref={subdropdown}>
-                                        <div className="m-2 text-black hover:bg-slate-200 relative" >
-                                            <div onClick={() => sub_menu_data(0)}>PM CB 22 kV</div>
-                                            <FontAwesomeIcon icon={faPlay} className="text-slate-400 absolute right-0 top-1/4 text-sm" />
-                                            {SubisOpen[0] && <div className="Subheader2"
-                                            >
-                                                <div className="no-underline m-2 text-black hover:bg-slate-200 relative">
-                                                    <Link to={'/SwitchGear'} className="no-underline text-black">SwitchGear</Link>
-                                                </div>
-
-                                                <div className="no-underline m-2 text-black hover:bg-slate-200 relative">
-                                                    <Link to={'/Transformer'} className="no-underline text-black">Transformer</Link>
-                                                </div>
-                                                <div className="m-2 text-black hover:bg-slate-200 relative">ย่อย1.1</div>
-                                            </div>}
-                                        </div>
-                                        <div className="m-2 text-black hover:bg-slate-200 relative">
-                                            <div onClick={() => sub_menu_data(1)}>PM CB 115 kV</div>
-                                            <FontAwesomeIcon icon={faPlay} className="text-slate-400 absolute right-0 top-1/4 text-sm" />
-                                            {SubisOpen[1] && <div className="Subheader2"
-                                            >
-                                                <div className="m-2 text-black hover:bg-slate-200 relative">ย่อย1.2</div>
-                                                <div className="m-2 text-black hover:bg-slate-200 relative">ย่อย1.2</div>
-                                                <div className="m-2 text-black hover:bg-slate-200 relative">ย่อย1.2</div>
-                                            </div>}
-                                        </div>
-                                        <div className="m-2 text-black hover:bg-slate-200 relative">
-                                            <div onClick={() => sub_menu_data(2)}>เอกสาร/รายงาน</div>
-                                            <FontAwesomeIcon icon={faPlay} className="text-slate-400 absolute right-0 top-1/4 text-sm" />
-                                            {SubisOpen[2] && <div className="Subheader2"
-                                            >
-                                                <div className="no-underline m-2 text-black hover:bg-slate-200 relative">
-                                                    <Link to={'/workpermit'} className="no-underline text-black">Work permit</Link>
-                                                </div>
-                                                <div className="no-underline m-2 text-black hover:bg-slate-200 relative">
-                                                    <Link to={'/RequestElectricalOff'} className="no-underline text-black">ขออนุมัติดับไฟ</Link>
-                                                </div>
-                                                <div className="no-underline m-2 text-black hover:bg-slate-200 relative">
-                                                    <Link to={'/Reciept'} className="no-underline text-black">เบิกเบี้ยเลี้ยง</Link>
-                                                </div>
-                                                
-                                            </div>}
-                                        </div>
-                                        <div className="m-2 text-black hover:bg-slate-200 relative">
-                                            <Link to={'/Dashboard'} className="no-underline text-black">DashBoard</Link>
-                                            {/* <FontAwesomeIcon icon={faPlay} className="text-slate-400 absolute right-0 top-1/4 text-sm" /> */}
-                                        </div>
-                                    </div>}
-
-                                </div>
-                            </div>
+                            
                         </div>
 
                         {/* Drop Down list show when login for logout  */}

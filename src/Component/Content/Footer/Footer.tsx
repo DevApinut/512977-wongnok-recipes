@@ -3,10 +3,10 @@ const Footer = () => {
         <>
             <footer className="footer-bar container">
                 <div className="pt-2">
-                    <div className="text-white text-sm ms-3">การไฟฟ้าส่วนภูมิภาค เขต 1 (ภาคใต้) จังหวัดเพชรบุรี</div>
-                    <div className="text-white text-sm ms-3">86 หมู่ 5 ถนนเพชรบุรี ตำบลโพไร่หวาน อำเภอเมืองเพชรบุรี จังหวัดเพชรบุรี 76000 | โทรศัพท์ : 0-3259-8156</div>
+                    <div className="text-white text-sm ms-3">เกี่ยวกับเรา</div>
+                    <div className="text-white text-sm ms-3">เว็บไซต์นี้จะเป็นเว็บไซต์เกี่ยวกับรายการอาหาร | ติดต่อ : 081-9635567</div>
                     <div className="copyright-menu">
-                        <div className="text-white">@Copyright 2024 by Apinut</div>
+                        <div className="text-white">@Copyright 2025 by Apinut</div>
                         <ul className="ulmenu">
                             <li>นโยบายเว็บไซต์</li>
                             <li>นโยบายการรักษาความมั่นคงปลอดภัยเว็บไซต์</li>

@@ -3,7 +3,7 @@
 @layer components {
 
     .footer-bar{
-        @apply w-full h-auto bg-fuchsia-600; 
+        @apply w-full h-auto bg-green-600; 
     }
     .copyright-menu{
         @apply flex  justify-start text-xs mt-2 mx-2

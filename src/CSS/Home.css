@@ -21,8 +21,8 @@
         overflow: hidden;
         border-right: 2px solid hsl(0, 0%, 80%);
         white-space: nowrap;
-        animation: typewriter 4s steps(44) 1s 1 normal both,
-            blinkTextCursor 500ms infinite;
+        animation: typewriter 3s steps(44) 1s 1 normal both,
+            blinkTextCursor 350ms infinite;
     }
 
     .subHeader-welcome1:hover {
@@ -86,7 +86,7 @@
         }
 
         to {
-            width: 485px;
+            width: 285px;
         }
     }
 

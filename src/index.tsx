@@ -4,10 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Myrouter from './Component/MyRouter/MyRouter';
-// import 'bootstrap/dist/css/bootstrap.min.css'
-// import 'bootstrap/dist/js/bootstrap.bundle'
-// import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'
-// import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
 
 
 const root = ReactDOM.createRoot(

@@ -3,13 +3,26 @@ import Navbar1 from "../Navbar/Navbar1"
 import Footer from "../Footer/Footer"
 import { Fade, Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'
-import image1 from '../../image/warinig.jpg'
-import image2 from '../../image/PEA_Solar_66.jpg'
-import image3 from '../../image/app.jpg'
-import PM_substatin from '../../image/PM_substation.jpg'
-import PM_AVR from '../../image/PM_AVR.jpg'
-import Repair from '../../image/repair.jpg'
-import Powertransformer from '../../image/power_transformer.jpg'
+// menu food picture
+import padtai from '../../image/padtai.jpg'
+import kangsom from '../../image/kangsom.webp'
+import somtum from '../../image/somtum.jpg'
+import kangpa from '../../image/kangpa.jpg'
+
+import pako from '../../image/pako.jpg'
+import smila from '../../image/smilar.jpg'
+import longkang from '../../image/longkang.jpg'
+import namgrung from '../../image/nangrum.jpg'
+
+import vild1 from '../../image/vild1.webp'
+import vild2 from '../../image/vild2.webp'
+import vild3 from '../../image/vild3.webp'
+import vild4 from '../../image/vild4.webp'
+import vild5 from '../../image/vild5.jpg'
+
+import Food from '../../image/Food.jpg'
+
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
@@ -52,17 +65,21 @@ const Home = () => {
     }
     const slideImages = [
         {
-            url: `${image1}`,
+            url: `${vild1}`,
             caption: '/Dashboard',
 
         },
         {
-            url: `${image2}`,
+            url: `${Food}`,
             caption: 'Slide 2'
         },
         {
-            url: `${image3}`,
+            url: `${smila}`,
             caption: 'Slide 3'
+        },
+        {
+            url: `${vild5}`,
+            caption: 'Slide 4'
         },
     ];
 
@@ -90,24 +107,24 @@ const Home = () => {
                             ))}
                         </Slide>
                         <div className="Header-welcome">
-                            <h1 className="subHeader-welcome1">แผนกสวิตช์เกียร์และหม้อแปลงไฟฟ้ากำลัง</h1>
-                            <div className="subHeader-welcome2">การไฟฟ้าส่วนภูมิภาค เขต 1 (ภาคใต้) จังหวัดเพชรบุรี</div>
+                            <h1 className="subHeader-welcome1">ยินดีต้อนรับเข้าสู่เว็บไชต์</h1>
+                            <div className="text-4xl font-bold ">Wongnok</div>
                         </div>
                         <div>
                             <div className="Header-news">
-                                <div className={`subHeader-news ${class_select_border[0]}`} onClick={(e) => { handle_select_header_news(0) }}>ภาพการดำเนินงาน</div>
-                                <div className={`subHeader-news ${class_select_border[1]}`} onClick={(e) => { handle_select_header_news(1) }}>ภาพกิจกรรมเพื่อสังคม</div>
-                                <div className={`subHeader-news ${class_select_border[2]}`} onClick={(e) => { handle_select_header_news(2) }}>ผลงาน/รางวัลในแผนก</div>
+                                <div className={`subHeader-news ${class_select_border[0]}`} onClick={(e) => { handle_select_header_news(0) }}>รายการอาหารเเนะนำ</div>
+                                <div className={`subHeader-news ${class_select_border[1]}`} onClick={(e) => { handle_select_header_news(1) }}>ที่เที่ยวน่าไป</div>
+                                <div className={`subHeader-news ${class_select_border[2]}`} onClick={(e) => { handle_select_header_news(2) }}>ที่พักน่าสนใจ</div>
                             </div>
                             {Headernew[0] && <div className="container-news relative flex justify-center">
                                 <div className="content-news border">
                                     <div className="sub-content-news">
                                         <div className="h-44">
-                                            <img src={PM_substatin} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
+                                            <img src={somtum} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
                                         </div>
                                         <div className="flex flex-col mx-2 h-2/4 ">
                                             <div className="Head_news">
-                                                งานบำรุงรักษาสถานีประจำปี 2567
+                                                ส้มตำ
                                             </div>
                                             <div className="flex justify-between my-2">
                                                 <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
@@ -119,11 +136,11 @@ const Home = () => {
                                 <div className="content-news ">
                                     <div className="sub-content-news">
                                         <div className="h-44">
-                                            <img src={PM_AVR} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
+                                            <img src={kangsom} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
                                         </div>
                                         <div className="flex flex-col mx-2">
                                             <div className="Head_news">
-                                                งานบำรุงรักษา AVR ประจำปี 2567
+                                                แกงส้ม
                                             </div>
                                             <div className="flex justify-between my-2">
                                                 <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
@@ -135,11 +152,11 @@ const Home = () => {
                                 <div className="content-news ">
                                     <div className="sub-content-news">
                                         <div className="h-44">
-                                            <img src={Repair} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
+                                            <img src={padtai} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
                                         </div>
                                         <div className="flex flex-col mx-2">
                                             <div className="Head_news">
-                                                งานซ่อมแซมเเก้ไขอุปกรณ์ชำรุด
+                                                ผัดไท
                                             </div>
                                             <div className="flex justify-between my-2">
                                                 <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
@@ -151,11 +168,11 @@ const Home = () => {
                                 <div className="content-news ">
                                     <div className="sub-content-news">
                                         <div className="h-44">
-                                            <img src={Powertransformer} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
+                                            <img src={kangpa} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
                                         </div>
                                         <div className="flex flex-col mx-2">
                                             <div className="Head_news">
-                                                ซ่อมรั่วหม้อแปลงไฟฟ้ากำลัง
+                                                แกงป่า
                                             </div>
                                             <div className="flex justify-between my-2">
                                                 <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
@@ -176,11 +193,11 @@ const Home = () => {
                                 <div className="content-news ">
                                     <div className="sub-content-news">
                                         <div className="h-44">
-                                            <img src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSN6mJjkb4rTsVlefy0lZm5v_Xg3-HGGQtxzvPHFjBNeA&s'} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
+                                            <img src={namgrung} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
                                         </div>
                                         <div className="flex flex-col mx-2">
                                             <div className="Head_news">
-                                                กิจกรรมปลูกป่า
+                                                หาดนางรำ
                                             </div>
                                             <div className="flex justify-between my-2">
                                                 <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
@@ -192,11 +209,11 @@ const Home = () => {
                                 <div className="content-news ">
                                     <div className="sub-content-news">
                                         <div className="h-44">
-                                            <img src={'https://img.salehere.co.th/p/1200x0/2019/11/29/u6nxdo8goiwp.jpg'} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
+                                            <img src={smila} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
                                         </div>
                                         <div className="flex flex-col mx-2">
                                             <div className="Head_news">
-                                                กิจกรรมจิตรอาสา
+                                                หาดสมิหรา
                                             </div>
                                             <div className="flex justify-between my-2">
                                                 <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
@@ -208,11 +225,11 @@ const Home = () => {
                                 <div className="content-news ">
                                     <div className="sub-content-news">
                                         <div className="h-44">
-                                            <img src={'https://lh4.googleusercontent.com/proxy/TJU2n3r5pW1mki-TKGfhVIwHKQB4xc1Sk7we9Oevo3aQ_bN3s2B_wTu5g8nvm1y5ajcRBxQBrecHdJxf9YsI_lBB1ai-BT_qKswqQcMIyBSkgIb6eURkBE-lCTkw411P9L0meDBaRadnaQ'} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
+                                            <img src={pako}></img>
                                         </div>
                                         <div className="flex flex-col mx-2">
                                             <div className="Head_news">
-                                                กิจกรรม 5 ส
+                                                วัดพระศรีรัตนศาสดาราม
                                             </div>
                                             <div className="flex justify-between my-2">
                                                 <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
@@ -224,11 +241,11 @@ const Home = () => {
                                 <div className="content-news ">
                                     <div className="sub-content-news">
                                         <div className="h-44">
-                                            <img src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0Fk1aLi2GJDMFqz8Ad0RaUFI7afpAKEbBeG9GRAER1A&s'} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
+                                            <img src={longkang} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
                                         </div>
                                         <div className="flex flex-col mx-2">
                                             <div className="Head_news">
-                                                กิจกรรม Green office
+                                                ล่องแก่ง หนานมดเเดง
                                             </div>
                                             <div className="flex justify-between my-2">
                                                 <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
@@ -249,11 +266,11 @@ const Home = () => {
                                 <div className="content-news ">
                                     <div className="sub-content-news">
                                         <div className="h-44">
-                                            <img src={PM_substatin} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
+                                            <img src={vild1} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
                                         </div>
                                         <div className="flex flex-col mx-2">
                                             <div className="Head_news">
-                                                งานบำรุงรักษาสถานีประจำปี 2567
+                                                โรงเเรมวิวดี
                                             </div>
                                             <div className="flex justify-between my-2">
                                                 <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
@@ -265,11 +282,11 @@ const Home = () => {
                                 <div className="content-news ">
                                     <div className="sub-content-news">
                                         <div className="h-44">
-                                            <img src={PM_AVR} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
+                                            <img src={vild2} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
                                         </div>
                                         <div className="flex flex-col mx-2">
                                             <div className="Head_news">
-                                                งานบำรุงรักษา AVR ประจำปี 2567
+                                                บ้านฮันโฮมสเตย์
                                             </div>
                                             <div className="flex justify-between my-2">
                                                 <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
@@ -281,11 +298,11 @@ const Home = () => {
                                 <div className="content-news ">
                                     <div className="sub-content-news">
                                         <div className="h-44">
-                                            <img src={Repair} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
+                                            <img src={vild3} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
                                         </div>
                                         <div className="flex flex-col mx-2">
                                             <div className="Head_news">
-                                                งานซ่อมแซมเเก้ไขอุปกรณ์ชำรุด
+                                                พักผ่อนวิลเลจ
                                             </div>
                                             <div className="flex justify-between my-2">
                                                 <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
@@ -297,11 +314,11 @@ const Home = () => {
                                 <div className="content-news ">
                                     <div className="sub-content-news">
                                         <div className="h-44">
-                                            <img src={Powertransformer} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
+                                            <img src={vild4} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
                                         </div>
                                         <div className="flex flex-col mx-2">
                                             <div className="Head_news">
-                                                ซ่อมรั่วหม้อแปลงไฟฟ้ากำลัง
+                                                นอนน้อยพักผ่อน
                                             </div>
                                             <div className="flex justify-between my-2">
                                                 <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
@@ -311,11 +328,11 @@ const Home = () => {
                                     </div>
                                 </div>
                                 
+                                
                                 <div className="symbolofdata">
                                     <FontAwesomeIcon icon={faChevronRight}
                                         className="border font-bold text-slate-950 bg-slate-50 p-2 rounded-full hover:cursor-pointer hover:text-slate-50 hover:bg-black"
-                                        onClick={(e) => { }}
-                                    />
+                                        onClick={(e) => { }}                                    />
                                 </div>
                                 <div className="read_other">อ่านเพิ่มเติม</div>
                             </div>}
