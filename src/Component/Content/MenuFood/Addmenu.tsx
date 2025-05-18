@@ -1,7 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { getusername } from '../Loginreg/Service_login';
+import StarRatings from 'react-star-ratings';
 const Modal = (props: any) => {
+
+    useEffect(() => {
+        if (props.button === "Update") {
+            // console.log(props.state.dataFromfetch[0].nameofFood)
+            props.setstatedis("nameofFood", props.state.dataFromfetch[0].nameofFood)
+            props.setstatedis("ingredient", props.state.dataFromfetch[0].ingredient)
+            props.setstatedis("reciept", props.state.dataFromfetch[0].reciept)
+            props.setstatedis("timeforcook", props.state.dataFromfetch[0].timeforcook)
+            props.setstatedis("imgfile", props.state.dataFromfetch[0].imgfile)
+            props.setstatedis("Hardforwork", props.state.dataFromfetch[0].Hardforwork)
+            props.setstatedis("ID", props.state.dataFromfetch[0]._id)            
+        }else{
+            props.setstatedis("nameofFood", "")
+            props.setstatedis("ingredient", "")
+            props.setstatedis("reciept", "")
+            props.setstatedis("timeforcook", "")
+            props.setstatedis("imgfile", "")
+            props.setstatedis("Hardforwork", "")            
+        }
+    }, [])
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -16,20 +37,43 @@ const Modal = (props: any) => {
     };
 
     const arrangedata = () => {
-        axios.post(`${process.env.REACT_APP_API}/MenuCreate`, {
-            nameofFood: props.state.nameofFood,
-            ingredient: props.state.ingredient,
-            reciept: props.state.reciept,
-            timeforcook: props.state.timeforcook,
-            Hardforwork: props.state.Hardforwork,
-            imgfile: props.state.imgfile,
-            nameUser: getusername()
-        })
-            .then((res) => {
-                console.log(res)
-                props.fetch()
-            }
-            )
+
+        if (props.button === "create") {
+            axios.post(`${process.env.REACT_APP_API}/MenuCreate`, {
+                nameofFood: props.state.nameofFood,
+                ingredient: props.state.ingredient,
+                reciept: props.state.reciept,
+                timeforcook: props.state.timeforcook,
+                Hardforwork: props.state.Hardforwork,
+                imgfile: props.state.imgfile,
+                nameUser: getusername()
+            })
+                .then((res) => {
+                    console.log(res)
+                    props.fetch()
+                }
+                )
+        }
+        if (props.button === "Update") {  
+            // console.log(props.state.nameofFood)          
+            // console.log(props.state.ingredient)          
+            // console.log(props.state.reciept)          
+            axios.post(`${process.env.REACT_APP_API}/UpdateMenu`, {
+                ID:props.state.ID,
+                nameofFood: props.state.nameofFood,
+                ingredient: props.state.ingredient,
+                reciept: props.state.reciept,
+                timeforcook: props.state.timeforcook,
+                Hardforwork: props.state.Hardforwork,
+                imgfile: props.state.imgfile,                
+            })
+                .then((res) => {
+                    console.log(res)
+                    props.fetch()
+                }
+                )
+        }
+
     }
 
     return (
@@ -40,26 +84,30 @@ const Modal = (props: any) => {
                     <h2 className="text-xl font-semibold mb-4  text-center">เพิ่มรายการอาหาร</h2>
                     <div className="flex flex-col">
                         <div>ชื่อเมนู</div>
-                        <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" onChange={(e) => props.setstatedis("nameofFood", e.target.value)} />
+                        <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" onChange={(e) => props.setstatedis("nameofFood", e.target.value)} value={props.state.nameofFood} />
                     </div>
                     <div className="flex flex-col ">
                         <div>วัตถุดิบ</div>
-                        <textarea className="border " onChange={(e) => props.setstatedis("ingredient", e.target.value)}></textarea>
+                        <textarea className="border " onChange={(e) => props.setstatedis("ingredient", e.target.value)} value={props.state.ingredient}></textarea>
                         <div className='text-sm text-red-200'>โปรดระบุเป็นข้อเช่น 1.เทน้ำมัน 2.นวดแป้ง</div>
                     </div>
                     <div className="flex flex-col ">
                         <div>สูตรอาหาร</div>
-                        <textarea className="border " onChange={(e) => props.setstatedis("reciept", e.target.value)}></textarea>
+                        <textarea className="border " onChange={(e) => props.setstatedis("reciept", e.target.value)} value={props.state.reciept}></textarea>
                     </div>
                     <div className="flex flex-col">
                         <div>ระยะเวลาในการปรุง</div>
-                        <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" onChange={(e) => props.setstatedis("timeforcook", e.target.value)} />
+                        <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" onChange={(e) => props.setstatedis("timeforcook", e.target.value)} value={props.state.timeforcook} />
                     </div>
                     <div className="flex flex-col">
                         <div>ความยากง่ายในการปรุง</div>
-                        <input type="number" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" onChange={(e) => props.setstatedis("Hardforwork", e.target.value)}
-                            min={1} // Set the min attribute
-                            max={3} />
+                        <StarRatings
+                            rating={Number(props.state.Hardforwork)}
+                            starRatedColor="blue"
+                            changeRating={(index: number) => props.setstatedis("Hardforwork", index)}
+                            numberOfStars={3}
+                            name='rating'
+                        />
                         <div className="text-sm text-red-200">** 1 ง่าย 2 ปานกลาง 3 ยาก</div>
                     </div>
                     <div className="flex flex-col">
@@ -73,10 +121,14 @@ const Modal = (props: any) => {
                     </div>
 
                     <button className="mt-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-blue-700 mx-2"
-                        onClick={arrangedata}
-                    >Create</button>
+                        onClick={()=>arrangedata()}
+                    >{props.button}</button>
                     <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                        onClick={() => props.setstatedis("Menuadd", false)}
+                        onClick={() => {
+                            props.setstatedis("Menuadd", false)
+                            props.setstatedis("MenuEdit", false)
+                        }
+                        }
                     >Close</button>
                 </div>
             </div>

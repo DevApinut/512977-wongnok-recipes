@@ -8,6 +8,7 @@ import Forgetpassword from "../Content/Loginreg/Forgetpassword";
 import Personel from "../Content/Homepage/Personal";
 import RedirectHome from "../Content/Private_redirect/RedirectHome";
 import MenuCrud from "../Content/MenuFood/menu";
+import Detailmenu from "../Content/MenuFood/Detailmenu";
 
 const Myrouter = () => {
     return (
@@ -21,6 +22,7 @@ const Myrouter = () => {
                 <Route path="/Forgetpassword" Component={Forgetpassword} />                
                 <Route path="/About/Personel" Component={Personel} />
                 <Route path="/About/Menu" Component={MenuCrud} />
+                <Route path="/About/Menu/detail/:id" Component={Detailmenu} />
             </Routes>
         </BrowserRouter>
 

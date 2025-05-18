@@ -6,6 +6,7 @@ declare module 'react-avatar-editor';
 declare module 'react-loading';
 declare module 'react-pdf-viewer';
 declare module 'edit-office-files';
+declare module 'react-star-ratings';
 declare module 'mini/src/Component/Content/Template/FM0.docx';
 
 // declaration.d.ts

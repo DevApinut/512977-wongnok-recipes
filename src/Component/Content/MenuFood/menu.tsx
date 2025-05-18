@@ -4,6 +4,9 @@ import Modal from "./Addmenu"
 import { useEffect, useReducer } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
+import StarRatings from 'react-star-ratings';
+import { getusername } from "../Loginreg/Service_login"
+
 
 
 const MenuCrud = () => {
@@ -15,6 +18,9 @@ const MenuCrud = () => {
 
     const initials = {
         Menuadd: false,
+        MenuEdit: false,
+        ID:"",
+        dataforEdit:"",
         nameofFood: "",
         ingredient: "",
         reciept: "",
@@ -22,7 +28,11 @@ const MenuCrud = () => {
         Hardforwork: "",
         imgfile: "",
         nameUser: "",
+        SuumratingofFood: "",
+        ratingofFood: "",
+        ratingforgive: 0,
         dataFromfetch: []
+
     }
     const reducer = (state: any, action: any) => {
         switch (action.type) {
@@ -54,11 +64,14 @@ const MenuCrud = () => {
             })
     }
 
+
     return (
         <>
             <Navbar1 />
             <div className="grow container w-full flex flex-col">
-                {state.Menuadd && <Modal setstatedis={setdatafromprops} state={state} fetch={fetch} />}
+                {state.Menuadd && <Modal setstatedis={setdatafromprops} state={state} fetch={fetch} nameHeader={"เพิ่มเมนูอาหาร"} button={"create"}/>}
+                {state.MenuEdit && <Modal setstatedis={setdatafromprops} state={state} fetch={fetch} nameHeader={"แก้ไขเมนูอาหาร"} 
+                button={"Update"}/>}
                 <div className="text-center text-3xl">รายการอาหาร</div>
                 <div className="flex justify-start">
                     <div className="mx-2 btn btn-success" onClick={() => setdatafromprops("Menuadd", true)}>เพิ่มรายการอาหาร </div>
@@ -73,18 +86,53 @@ const MenuCrud = () => {
                                 <div className="border h-full px-2 rounded-xl">
                                     <div>{`ชื่อเมนู: ${data.nameofFood}`}</div>
                                     <div>{`ระยะเวลา: ${data.timeforcook}`}</div>
-                                    <div>{`ความยาก: ${data.Hardforwork}`}</div>
+                                    <div className="flex justify-start items-center ">
+                                        <div>{`rating:`}</div>
+                                        <div>&nbsp;{`${data.SuumratingofFood}`}</div>
+                                        <div className="mx-2">
+                                            &nbsp;<StarRatings
+                                                rating={Number(data.SuumratingofFood)}
+                                                starRatedColor="blue"
+                                                numberOfStars={5}
+                                                starDimension={20}
+                                                name='rating'
+                                            />
+                                        </div>
+
+
+                                    </div>
+                                    <div className="flex justify-start items-center ">
+                                        <div>{`ความยาก:`}</div>
+                                        <div className="mx-2">
+                                            <StarRatings
+                                                rating={Number(data.Hardforwork)}
+                                                starRatedColor="blue"
+                                                numberOfStars={3}
+                                                starDimension={20}
+                                                name='rating'
+                                            />
+                                        </div>
+
+                                    </div>
                                     <div>{`ผู้สร้าง: ${data.nameUser}`}</div>
                                     <div className="mt-2 flex justify-center flex-col items-center w-full">
                                         <img src={data.imgfile} alt="Preview" width={"100%"} className="max-w-xs rounded shadow" />
                                     </div>
                                     <div className="flex justify-between w-full">
                                         <div className="items-end  flex justify-start" >
-                                            <Link to={`/Menu/${data._id}`} className="btn btn-dark my-2 justify-self-end">อ่านรายระเอียด</Link>
+                                            <Link to={`/About/Menu/detail/${data._id}`} className="btn btn-dark my-2 justify-self-end">อ่านรายระเอียด</Link>
+                                        </div>
+                                        <div className="items-center  flex justify-center">
+                                            <div className="mx-2 btn btn-success" onClick={() => {
+                                                setdatafromprops("MenuEdit", true)
+                                                setdatafromprops("dataforEdit", data)                                                
+                                                }}>แก้ไข </div>
+                                            {/* <div className="mx-2 btn btn-danger">ลบรายการอาหาร</div> */}
                                         </div>
                                         <div className="items-end  flex justify-start" >
                                             <div className="btn btn-danger my-2 justify-self-end" onClick={() => { deleteMenu(data._id) }}>ลบ</div>
                                         </div>
+
                                     </div>
 
                                 </div>
