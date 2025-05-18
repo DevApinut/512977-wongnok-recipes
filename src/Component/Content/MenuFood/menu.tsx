@@ -6,6 +6,7 @@ import axios from "axios"
 import { Link } from "react-router-dom"
 import StarRatings from 'react-star-ratings';
 import { getusername } from "../Loginreg/Service_login"
+import Swal from "sweetalert2"
 
 
 
@@ -19,8 +20,8 @@ const MenuCrud = () => {
     const initials = {
         Menuadd: false,
         MenuEdit: false,
-        ID:"",
-        dataforEdit:"",
+        ID: "",
+        dataforEdit: "",
         nameofFood: "",
         ingredient: "",
         reciept: "",
@@ -31,7 +32,8 @@ const MenuCrud = () => {
         SuumratingofFood: "",
         ratingofFood: "",
         ratingforgive: 0,
-        dataFromfetch: []
+        dataFromfetch: [],
+        findData: ""
 
     }
     const reducer = (state: any, action: any) => {
@@ -49,19 +51,46 @@ const MenuCrud = () => {
     const setdatafromprops = (name: any, value: any) => {
         dispatch({ type: "setstate", payload: { name: name, value: value } })
     }
-    const fetch = () => {
-        axios.get(`${process.env.REACT_APP_API}/GetMenu`)
+    const fetch = (data: any = "") => {
+        axios.get(`${process.env.REACT_APP_API}/GetMenu`, {
+            params: {
+                data: data,
+            }
+        })
             .then((result: any) => {
                 console.log(result)
                 dispatch({ type: "setstate", payload: { name: "dataFromfetch", value: [...result.data.res] } })
             })
     }
+    const finddata = (data: any = "") => {
+        fetch(data)
+        dispatch({ type: "setstate", payload: { name: "findData", value: data } })
+    }
     const deleteMenu = (ID: string) => {
-        axios.post(`${process.env.REACT_APP_API}/deleteMenu`, { ID })
-            .then((result: any) => {
-                console.log(result)
-                fetch()
-            })
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post(`${process.env.REACT_APP_API}/deleteMenu`, { ID })
+                    .then((result: any) => {
+                        fetch()
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        });
+                    })
+
+            }
+        });
+
     }
 
 
@@ -69,15 +98,23 @@ const MenuCrud = () => {
         <>
             <Navbar1 />
             <div className="grow container w-full flex flex-col">
-                {state.Menuadd && <Modal setstatedis={setdatafromprops} state={state} fetch={fetch} nameHeader={"เพิ่มเมนูอาหาร"} button={"create"}/>}
-                {state.MenuEdit && <Modal setstatedis={setdatafromprops} state={state} fetch={fetch} nameHeader={"แก้ไขเมนูอาหาร"} 
-                button={"Update"}/>}
+                {state.Menuadd && <Modal setstatedis={setdatafromprops} state={state} fetch={fetch} nameHeader={"เพิ่มเมนูอาหาร"} button={"create"} />}
+                {state.MenuEdit && <Modal setstatedis={setdatafromprops} state={state} fetch={fetch} nameHeader={"แก้ไขเมนูอาหาร"}
+                    button={"Update"} />}
                 <div className="text-center text-3xl">รายการอาหาร</div>
-                <div className="flex justify-start">
-                    <div className="mx-2 btn btn-success" onClick={() => setdatafromprops("Menuadd", true)}>เพิ่มรายการอาหาร </div>
-                    {/* <div className="mx-2 btn btn-danger">ลบรายการอาหาร</div> */}
+                <div className="flex justify-between items-center">
+
+                    <div className="flex justify-start">
+                        {getusername() && <div className="mx-2 btn btn-success" onClick={() => setdatafromprops("Menuadd", true)}>เพิ่มรายการอาหาร </div>}
+                    </div>
+                    <div className="w-1/2">
+                        <input type="text" className="border w-full text-center" placeholder="SeachData....." onChange={(e) => {
+                            finddata(e.target.value)
+                        }} />
+                    </div>
                 </div>
-                <div className="border my-2"></div>
+
+
 
                 <div className="flex flex-wrap justify-start items-center ">
                     {state.dataFromfetch.map((data: any, index: number) => {
@@ -98,6 +135,9 @@ const MenuCrud = () => {
                                                 name='rating'
                                             />
                                         </div>
+                                        <div>
+                                            {`(${data.ratingofFood.length})`}
+                                        </div>
 
 
                                     </div>
@@ -116,22 +156,25 @@ const MenuCrud = () => {
                                     </div>
                                     <div>{`ผู้สร้าง: ${data.nameUser}`}</div>
                                     <div className="mt-2 flex justify-center flex-col items-center w-full">
-                                        <img src={data.imgfile} alt="Preview" width={"100%"} className="max-w-xs rounded shadow" />
+                                        <img src={data.imgfile} alt="Preview" className="max-w-xs rounded shadow  h-48 w-60" />
                                     </div>
                                     <div className="flex justify-between w-full">
                                         <div className="items-end  flex justify-start" >
                                             <Link to={`/About/Menu/detail/${data._id}`} className="btn btn-dark my-2 justify-self-end">อ่านรายระเอียด</Link>
                                         </div>
-                                        <div className="items-center  flex justify-center">
-                                            <div className="mx-2 btn btn-success" onClick={() => {
-                                                setdatafromprops("MenuEdit", true)
-                                                setdatafromprops("dataforEdit", data)                                                
-                                                }}>แก้ไข </div>
-                                            {/* <div className="mx-2 btn btn-danger">ลบรายการอาหาร</div> */}
+                                        {getusername() === data.nameUser && <div className="grow flex justify-end">
+                                            <div className="items-center  flex justify-center">
+                                                <div className="mx-2 btn btn-success" onClick={() => {
+                                                    setdatafromprops("MenuEdit", true)
+                                                    setdatafromprops("dataforEdit", data)
+                                                }}>✐</div>
+                                                {/* <div className="mx-2 btn btn-danger">ลบรายการอาหาร</div> */}
+                                            </div>
+                                            <div className="items-end  flex justify-start" >
+                                                <div className="btn btn-danger my-2 justify-self-end S" onClick={() => { deleteMenu(data._id) }}>✄</div>
+                                            </div>
                                         </div>
-                                        <div className="items-end  flex justify-start" >
-                                            <div className="btn btn-danger my-2 justify-self-end" onClick={() => { deleteMenu(data._id) }}>ลบ</div>
-                                        </div>
+                                        }
 
                                     </div>
 

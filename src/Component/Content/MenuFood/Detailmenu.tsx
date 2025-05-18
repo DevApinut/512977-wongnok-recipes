@@ -6,6 +6,7 @@ import axios from "axios"
 import StarRatings from 'react-star-ratings';
 import { Link } from "react-router-dom"
 import { getusername } from "../Loginreg/Service_login"
+import Swal from "sweetalert2"
 const Detailmenu = () => {
     const { id } = useParams()
 
@@ -74,38 +75,49 @@ const Detailmenu = () => {
 
     }
     const setrating = (rating: number) => {
-        let ratingstate = [...state.ratingofFood]
-        let count = 0
-        let username = "ไม่ระบุตัวตน"
-        let sumrating = 0
-        if (getusername() !== false) username = getusername()
-        if (ratingstate.length > 0) {
-            ratingstate.map((data: any, index: number) => {
-                if (data.name == username) {
-                    ratingstate[index].rating = rating
-                } else {
-                    count++
-                }
 
+        if (getusername() === false) {
+            Swal.fire({
+                title: "Please Login",
+                icon: "error",                
             })
+        } else {
+            let ratingstate = [...state.ratingofFood]
+            let count = 0
+            let username = "ไม่ระบุตัวตน"
+            let sumrating = 0
+            if (getusername() !== false) username = getusername()
+            if (ratingstate.length > 0) {
+                ratingstate.map((data: any, index: number) => {
+                    if (data.name == username) {
+                        ratingstate[index].rating = rating
+                    } else {
+                        count++
+                    }
+
+                })
+            }
+            if (count === ratingstate.length) { ratingstate.push({ name: username, rating }) }
+            dispatch({ type: "setstate", payload: { name: "ratingforgive", value: rating } })
+            console.log(rating)
+            console.log(ratingstate.length)
+            if (ratingstate.length > 0) {
+                ratingstate.map((data: any, index: number) => {
+                    sumrating = data.rating + sumrating
+                })
+            }
+            axios.post(`${process.env.REACT_APP_API}/Updaterating`, { ID: id, ratingofFood: ratingstate, SuumratingofFood: sumrating / ratingstate.length })
+                .then((result: any) => {
+                    fetch()
+                })
+
         }
 
 
 
 
-        if (count === ratingstate.length) { ratingstate.push({ name: username, rating }) }
-        dispatch({ type: "setstate", payload: { name: "ratingforgive", value: rating } })
-        console.log(rating)
-        console.log(ratingstate.length)
-        if (ratingstate.length > 0) {
-            ratingstate.map((data: any, index: number) => {
-                sumrating = data.rating + sumrating
-            })
-        }
-        axios.post(`${process.env.REACT_APP_API}/Updaterating`, { ID: id, ratingofFood: ratingstate, SuumratingofFood: sumrating / ratingstate.length })
-            .then((result: any) => {
-                fetch()
-            })
+
+
 
 
 

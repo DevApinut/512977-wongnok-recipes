@@ -7,22 +7,22 @@ const Modal = (props: any) => {
     useEffect(() => {
         if (props.button === "Update") {
             // console.log(props.state.dataFromfetch[0].nameofFood)
-            props.setstatedis("nameofFood", props.state.dataFromfetch[0].nameofFood)
-            props.setstatedis("ingredient", props.state.dataFromfetch[0].ingredient)
-            props.setstatedis("reciept", props.state.dataFromfetch[0].reciept)
-            props.setstatedis("timeforcook", props.state.dataFromfetch[0].timeforcook)
-            props.setstatedis("imgfile", props.state.dataFromfetch[0].imgfile)
-            props.setstatedis("Hardforwork", props.state.dataFromfetch[0].Hardforwork)
-            props.setstatedis("ID", props.state.dataFromfetch[0]._id)            
-        }else{
+            props.setstatedis("nameofFood", props.state.dataforEdit.nameofFood)
+            props.setstatedis("ingredient", props.state.dataforEdit.ingredient)
+            props.setstatedis("reciept", props.state.dataforEdit.reciept)
+            props.setstatedis("timeforcook", props.state.dataforEdit.timeforcook)
+            props.setstatedis("imgfile", props.state.dataforEdit.imgfile)
+            props.setstatedis("Hardforwork", props.state.dataforEdit.Hardforwork)
+            props.setstatedis("ID", props.state.dataforEdit._id)
+        } else {
             props.setstatedis("nameofFood", "")
             props.setstatedis("ingredient", "")
             props.setstatedis("reciept", "")
             props.setstatedis("timeforcook", "")
             props.setstatedis("imgfile", "")
-            props.setstatedis("Hardforwork", "")            
+            props.setstatedis("Hardforwork", "")
         }
-    }, [])
+    }, [props.state.dataforEdit])
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -54,18 +54,18 @@ const Modal = (props: any) => {
                 }
                 )
         }
-        if (props.button === "Update") {  
+        if (props.button === "Update") {
             // console.log(props.state.nameofFood)          
             // console.log(props.state.ingredient)          
             // console.log(props.state.reciept)          
             axios.post(`${process.env.REACT_APP_API}/UpdateMenu`, {
-                ID:props.state.ID,
+                ID: props.state.ID,
                 nameofFood: props.state.nameofFood,
                 ingredient: props.state.ingredient,
                 reciept: props.state.reciept,
                 timeforcook: props.state.timeforcook,
                 Hardforwork: props.state.Hardforwork,
-                imgfile: props.state.imgfile,                
+                imgfile: props.state.imgfile,
             })
                 .then((res) => {
                     console.log(res)
@@ -75,6 +75,14 @@ const Modal = (props: any) => {
         }
 
     }
+
+    const changeclock = (valuefromtarget: string) => {
+        const value = valuefromtarget;
+        // Optional: Basic validation
+        if (/^\d{0,2}:?\d{0,2}$/.test(value)) {
+            props.setstatedis("timeforcook", value)
+        }
+    };
 
     return (
 
@@ -97,7 +105,15 @@ const Modal = (props: any) => {
                     </div>
                     <div className="flex flex-col">
                         <div>ระยะเวลาในการปรุง</div>
-                        <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" onChange={(e) => props.setstatedis("timeforcook", e.target.value)} value={props.state.timeforcook} />
+
+                        <input
+                            type="text"
+                            placeholder="HH:MM"
+                            value={props.state.timeforcook}
+                            onChange={(e) => changeclock(e.target.value)}
+                            className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"
+                        />
+                        {/* <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" onChange={(e) => props.setstatedis("timeforcook", e.target.value)} value={props.state.timeforcook} /> */}
                     </div>
                     <div className="flex flex-col">
                         <div>ความยากง่ายในการปรุง</div>
@@ -121,7 +137,7 @@ const Modal = (props: any) => {
                     </div>
 
                     <button className="mt-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-blue-700 mx-2"
-                        onClick={()=>arrangedata()}
+                        onClick={() => arrangedata()}
                     >{props.button}</button>
                     <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                         onClick={() => {
