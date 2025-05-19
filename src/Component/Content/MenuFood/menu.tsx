@@ -5,7 +5,7 @@ import { useEffect, useReducer } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
 import StarRatings from 'react-star-ratings';
-import { getusername } from "../Loginreg/Service_login"
+import { getToken, getusername } from "../Loginreg/Service_login"
 import Swal from "sweetalert2"
 
 
@@ -33,7 +33,8 @@ const MenuCrud = () => {
         ratingofFood: "",
         ratingforgive: 0,
         dataFromfetch: [],
-        findData: ""
+        findData: "",
+        findstar: 0
 
     }
     const reducer = (state: any, action: any) => {
@@ -51,19 +52,25 @@ const MenuCrud = () => {
     const setdatafromprops = (name: any, value: any) => {
         dispatch({ type: "setstate", payload: { name: name, value: value } })
     }
-    const fetch = (data: any = "") => {
+    const fetch = (data: any = "", rating: Number = 0) => {
         axios.get(`${process.env.REACT_APP_API}/GetMenu`, {
             params: {
                 data: data,
+                rating: Number(rating)
+            },
+            headers: {
+                authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json'
             }
-        })
+        }
+        )
             .then((result: any) => {
                 console.log(result)
                 dispatch({ type: "setstate", payload: { name: "dataFromfetch", value: [...result.data.res] } })
             })
     }
     const finddata = (data: any = "") => {
-        fetch(data)
+        fetch(data, Number(state.findstar))
         dispatch({ type: "setstate", payload: { name: "findData", value: data } })
     }
     const deleteMenu = (ID: string) => {
@@ -78,7 +85,12 @@ const MenuCrud = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post(`${process.env.REACT_APP_API}/deleteMenu`, { ID })
+                axios.post(`${process.env.REACT_APP_API}/deleteMenu`, { ID }, {
+                    headers: {
+                        authorization: `Bearer ${getToken()}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
                     .then((result: any) => {
                         fetch()
                         Swal.fire({
@@ -90,33 +102,48 @@ const MenuCrud = () => {
 
             }
         });
-
+    }
+    const Findfromrating = (star: number) => {
+        console.log(star)
+        console.log(state.findData)
+        fetch(state.findData, star)
+        dispatch({ type: "setstate", payload: { name: "findstar", value: star } })
     }
 
 
     return (
-        <>
+        <div className="min-h-screen flex flex-col">
             <Navbar1 />
             <div className="grow container w-full flex flex-col">
                 {state.Menuadd && <Modal setstatedis={setdatafromprops} state={state} fetch={fetch} nameHeader={"เพิ่มเมนูอาหาร"} button={"create"} />}
                 {state.MenuEdit && <Modal setstatedis={setdatafromprops} state={state} fetch={fetch} nameHeader={"แก้ไขเมนูอาหาร"}
                     button={"Update"} />}
                 <div className="text-center text-3xl">รายการอาหาร</div>
-                <div className="flex justify-between items-center">
+                <div className="flex justify-end items-center">
 
-                    <div className="flex justify-start">
-                        {getusername() && <div className="mx-2 btn btn-success" onClick={() => setdatafromprops("Menuadd", true)}>เพิ่มรายการอาหาร </div>}
-                    </div>
-                    <div className="w-1/2">
-                        <input type="text" className="border w-full text-center" placeholder="SeachData....." onChange={(e) => {
+                    {getusername() && <div className="justify-self-start grow">
+                        <div className="mx-2 btn btn-success" onClick={() => setdatafromprops("Menuadd", true)}>เพิ่มรายการอาหาร </div>
+                    </div>}
+                    
+                    <div className="lg:w-1/2 flex">
+                        <input type="text" className="border w-full text-center rounded-xl" placeholder="SeachData....." onChange={(e) => {
                             finddata(e.target.value)
                         }} />
+                        <select className="flex border w-40 rounded-xl text-yellow-500" onChange={(e: any) => Findfromrating(e.target.value)}>
+                            <option value={0}>All rating</option>
+                            <option value={1} className="text-yellow-500">★ 1</option>
+                            <option value={2} className="text-yellow-500">★ 2</option>
+                            <option value={3} className="text-yellow-500">★ 3</option>
+                            <option value={4} className="text-yellow-500">★ 4</option>
+                            <option value={5} className="text-yellow-500">★ 5</option>
+                        </select>
+
                     </div>
                 </div>
 
 
 
-                <div className="flex flex-wrap justify-start items-center ">
+                <div className="sm:flex sm:flex-wrap sm:justify-center sm:items-center md:flex md:flex-wrap md:justify-start md:items-center lg:flex lg:flex-wrap lg:justify-start lg:items-center">
                     {state.dataFromfetch.map((data: any, index: number) => {
                         return (
                             <div className="lg:w-1/4 lg:h-200 md:w-1/2 md:h-200  sm:w-full  sm:h-200 py-3 px-2 flex flex-col">
@@ -193,7 +220,7 @@ const MenuCrud = () => {
             </div >
 
             <Footer />
-        </>
+        </div>
     )
 }
 

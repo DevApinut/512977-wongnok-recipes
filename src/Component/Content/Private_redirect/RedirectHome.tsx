@@ -7,8 +7,7 @@ const RedirectHome = ({Component,...prop}:any) => {
     
     if(!getusername()){        
         return <Component {...prop} />        
-    }else{
-        console.log('test')
+    }else{        
         return <Navigate to="/Homepage" {...prop} replace />
     }
 }

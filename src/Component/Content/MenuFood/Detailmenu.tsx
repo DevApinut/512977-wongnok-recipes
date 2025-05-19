@@ -5,7 +5,7 @@ import { useEffect, useReducer } from "react"
 import axios from "axios"
 import StarRatings from 'react-star-ratings';
 import { Link } from "react-router-dom"
-import { getusername } from "../Loginreg/Service_login"
+import { getToken, getusername } from "../Loginreg/Service_login"
 import Swal from "sweetalert2"
 const Detailmenu = () => {
     const { id } = useParams()
@@ -79,9 +79,17 @@ const Detailmenu = () => {
         if (getusername() === false) {
             Swal.fire({
                 title: "Please Login",
-                icon: "error",                
+                icon: "error",
+                scrollbarPadding: false,
             })
-        } else {
+        } else if (getusername() === state.nameUser) {
+            Swal.fire({
+                title: "Do not rate yourself",
+                icon: "error",
+                scrollbarPadding: false,
+            })
+        }
+        else {
             let ratingstate = [...state.ratingofFood]
             let count = 0
             let username = "ไม่ระบุตัวตน"
@@ -106,28 +114,22 @@ const Detailmenu = () => {
                     sumrating = data.rating + sumrating
                 })
             }
-            axios.post(`${process.env.REACT_APP_API}/Updaterating`, { ID: id, ratingofFood: ratingstate, SuumratingofFood: sumrating / ratingstate.length })
+            axios.post(`${process.env.REACT_APP_API}/Updaterating`, { ID: id, ratingofFood: ratingstate, SuumratingofFood: sumrating / ratingstate.length }, {
+                headers: {
+                    authorization: `Bearer ${getToken()}`,
+                    'Content-Type': 'application/json'
+                }
+            })
                 .then((result: any) => {
                     fetch()
                 })
 
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 
 
     return (
-        <>
+        <div className="min-h-screen flex flex-col">
             <Navbar1 />
             <div className="grow container">
                 <div className="text justify-center text-center text-xl font-bold"> {`เมนู ${state.nameofFood}`}</div>
@@ -190,7 +192,7 @@ const Detailmenu = () => {
 
             </div>
             <Footer />
-        </>
+        </div>
     )
 }
 

@@ -22,6 +22,8 @@ import vild5 from '../../image/vild5.jpg'
 
 import Food from '../../image/Food.jpg'
 
+import ShowData from "./showpicdata";
+
 
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -47,7 +49,7 @@ const Home = () => {
         }
     })
 
-    console.log(class_select_border)
+
     const spanStyle = {
         padding: '20px',
         background: '#efefef',
@@ -101,241 +103,33 @@ const Home = () => {
                             {slideImages.map((slideImage, index) => (
                                 <div key={index}>
                                     <div style={{ ...divStyle, 'backgroundImage': `url(${slideImage.url})` }} >
-                                        {/* <span style={spanStyle}>{slideImage.caption}</span> */}
                                     </div>
                                 </div>
                             ))}
                         </Slide>
                         <div className="Header-welcome">
-                            <h1 className="subHeader-welcome1">ยินดีต้อนรับเข้าสู่เว็บไชต์</h1>
+                            <h1 className="subHeader-welcome1">Wellcome To website</h1>
                             <div className="text-4xl font-bold ">Wongnok</div>
                         </div>
                         <div>
-                            <div className="Header-news">
-                                <div className={`subHeader-news ${class_select_border[0]}`} onClick={(e) => { handle_select_header_news(0) }}>รายการอาหารเเนะนำ</div>
-                                <div className={`subHeader-news ${class_select_border[1]}`} onClick={(e) => { handle_select_header_news(1) }}>ที่เที่ยวน่าไป</div>
-                                <div className={`subHeader-news ${class_select_border[2]}`} onClick={(e) => { handle_select_header_news(2) }}>ที่พักน่าสนใจ</div>
+                            <div className="w-full flex">
+                                <div className={`subHeader-news ${class_select_border[0]} lg:w-36 md:w-1/2 sm:w-1/2 xs:w-1/2 text-center`} onClick={(e) => { handle_select_header_news(0) }}>รายการมาใหม่</div>
+                                <div className={`subHeader-news ${class_select_border[1]} lg:w-36 md:w-1/2 sm:w-1/2 xs:w-1/2 text-center`} onClick={(e) => { handle_select_header_news(1) }}>คะเเนนสูงสุด</div>
                             </div>
+
                             {Headernew[0] && <div className="container-news relative flex justify-center">
-                                <div className="content-news border">
-                                    <div className="sub-content-news">
-                                        <div className="h-44">
-                                            <img src={somtum} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
-                                        </div>
-                                        <div className="flex flex-col mx-2 h-2/4 ">
-                                            <div className="Head_news">
-                                                ส้มตำ
-                                            </div>
-                                            <div className="flex justify-between my-2">
-                                                <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
-                                                <div className="text-sm ">ข้อมูล 8 พ.ค. 67</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="content-news ">
-                                    <div className="sub-content-news">
-                                        <div className="h-44">
-                                            <img src={kangsom} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
-                                        </div>
-                                        <div className="flex flex-col mx-2">
-                                            <div className="Head_news">
-                                                แกงส้ม
-                                            </div>
-                                            <div className="flex justify-between my-2">
-                                                <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
-                                                <div className="text-sm ">ข้อมูล 8 พ.ค. 67</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="content-news ">
-                                    <div className="sub-content-news">
-                                        <div className="h-44">
-                                            <img src={padtai} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
-                                        </div>
-                                        <div className="flex flex-col mx-2">
-                                            <div className="Head_news">
-                                                ผัดไท
-                                            </div>
-                                            <div className="flex justify-between my-2">
-                                                <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
-                                                <div className="text-sm ">ข้อมูล 8 พ.ค. 67</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="content-news ">
-                                    <div className="sub-content-news">
-                                        <div className="h-44">
-                                            <img src={kangpa} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
-                                        </div>
-                                        <div className="flex flex-col mx-2">
-                                            <div className="Head_news">
-                                                แกงป่า
-                                            </div>
-                                            <div className="flex justify-between my-2">
-                                                <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
-                                                <div className="text-sm ">ข้อมูล 8 พ.ค. 67</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="symbolofdata">
-                                    <FontAwesomeIcon icon={faChevronRight}
-                                        className="border font-bold text-slate-950 bg-slate-50 p-2 rounded-full hover:cursor-pointer hover:text-slate-50 hover:bg-black"
-                                        onClick={(e) => { }}
-                                    />
-                                </div>
-                                <div className="read_other">อ่านเพิ่มเติม</div>
+                                <ShowData img={somtum} />
+                                <ShowData img={somtum} />
+                                <ShowData img={somtum} />
+                                <ShowData img={somtum} />
                             </div>}
                             {Headernew[1] && <div className="container-news relative flex justify-center">
-                                <div className="content-news ">
-                                    <div className="sub-content-news">
-                                        <div className="h-44">
-                                            <img src={namgrung} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
-                                        </div>
-                                        <div className="flex flex-col mx-2">
-                                            <div className="Head_news">
-                                                หาดนางรำ
-                                            </div>
-                                            <div className="flex justify-between my-2">
-                                                <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
-                                                <div className="text-sm ">ข้อมูล 8 พ.ค. 67</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="content-news ">
-                                    <div className="sub-content-news">
-                                        <div className="h-44">
-                                            <img src={smila} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
-                                        </div>
-                                        <div className="flex flex-col mx-2">
-                                            <div className="Head_news">
-                                                หาดสมิหรา
-                                            </div>
-                                            <div className="flex justify-between my-2">
-                                                <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
-                                                <div className="text-sm ">ข้อมูล 8 พ.ค. 67</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="content-news ">
-                                    <div className="sub-content-news">
-                                        <div className="h-44">
-                                            <img src={pako}></img>
-                                        </div>
-                                        <div className="flex flex-col mx-2">
-                                            <div className="Head_news">
-                                                วัดพระศรีรัตนศาสดาราม
-                                            </div>
-                                            <div className="flex justify-between my-2">
-                                                <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
-                                                <div className="text-sm ">ข้อมูล 8 พ.ค. 67</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="content-news ">
-                                    <div className="sub-content-news">
-                                        <div className="h-44">
-                                            <img src={longkang} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
-                                        </div>
-                                        <div className="flex flex-col mx-2">
-                                            <div className="Head_news">
-                                                ล่องแก่ง หนานมดเเดง
-                                            </div>
-                                            <div className="flex justify-between my-2">
-                                                <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
-                                                <div className="text-sm ">ข้อมูล 8 พ.ค. 67</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="symbolofdata">
-                                    <FontAwesomeIcon icon={faChevronRight}
-                                        className="border font-bold text-slate-950 bg-slate-50 p-2 rounded-full hover:cursor-pointer hover:text-slate-50 hover:bg-black"
-                                        onClick={(e) => { }}
-                                    />
-                                </div>
-                                <div className="read_other">อ่านเพิ่มเติม</div>
+                                <ShowData img={padtai} />
+                                <ShowData img={padtai} />
+                                <ShowData img={padtai} />
+                                <ShowData img={padtai} />
                             </div>}
-                            {Headernew[2] && <div className="container-news relative flex justify-center">
-                                <div className="content-news ">
-                                    <div className="sub-content-news">
-                                        <div className="h-44">
-                                            <img src={vild1} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
-                                        </div>
-                                        <div className="flex flex-col mx-2">
-                                            <div className="Head_news">
-                                                โรงเเรมวิวดี
-                                            </div>
-                                            <div className="flex justify-between my-2">
-                                                <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
-                                                <div className="text-sm ">ข้อมูล 8 พ.ค. 67</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="content-news ">
-                                    <div className="sub-content-news">
-                                        <div className="h-44">
-                                            <img src={vild2} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
-                                        </div>
-                                        <div className="flex flex-col mx-2">
-                                            <div className="Head_news">
-                                                บ้านฮันโฮมสเตย์
-                                            </div>
-                                            <div className="flex justify-between my-2">
-                                                <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
-                                                <div className="text-sm ">ข้อมูล 8 พ.ค. 67</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="content-news ">
-                                    <div className="sub-content-news">
-                                        <div className="h-44">
-                                            <img src={vild3} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
-                                        </div>
-                                        <div className="flex flex-col mx-2">
-                                            <div className="Head_news">
-                                                พักผ่อนวิลเลจ
-                                            </div>
-                                            <div className="flex justify-between my-2">
-                                                <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
-                                                <div className="text-sm ">ข้อมูล 8 พ.ค. 67</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="content-news ">
-                                    <div className="sub-content-news">
-                                        <div className="h-44">
-                                            <img src={vild4} width={"100%"} height={"100%"} className="border h-full image-hover"></img>
-                                        </div>
-                                        <div className="flex flex-col mx-2">
-                                            <div className="Head_news">
-                                                นอนน้อยพักผ่อน
-                                            </div>
-                                            <div className="flex justify-between my-2">
-                                                <div><Link to={"#"} className="no-underline text-slate-950 hover:border hover:p-1 hover:bg-slate-800 hover:rounded-xl hover:text-slate-50 ">อ่านรายระเอียด...</Link></div>
-                                                <div className="text-sm ">ข้อมูล 8 พ.ค. 67</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                
-                                <div className="symbolofdata">
-                                    <FontAwesomeIcon icon={faChevronRight}
-                                        className="border font-bold text-slate-950 bg-slate-50 p-2 rounded-full hover:cursor-pointer hover:text-slate-50 hover:bg-black"
-                                        onClick={(e) => { }}                                    />
-                                </div>
-                                <div className="read_other">อ่านเพิ่มเติม</div>
-                            </div>}
+
 
                         </div>
                     </div>

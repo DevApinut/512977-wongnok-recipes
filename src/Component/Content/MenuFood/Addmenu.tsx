@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { getusername } from '../Loginreg/Service_login';
+import { getToken, getusername } from '../Loginreg/Service_login';
 import StarRatings from 'react-star-ratings';
+import Swal from 'sweetalert2';
 const Modal = (props: any) => {
 
     useEffect(() => {
@@ -47,10 +48,19 @@ const Modal = (props: any) => {
                 Hardforwork: props.state.Hardforwork,
                 imgfile: props.state.imgfile,
                 nameUser: getusername()
+            }, {
+                headers: {
+                    authorization: `Bearer ${getToken()}`,
+                    'Content-Type': 'application/json'
+                }
             })
-                .then((res) => {
-                    console.log(res)
-                    props.fetch()
+                .then(async (res) => {
+                    await props.fetch()
+                    Swal.fire({
+                        title: "Create Success",
+                        icon: "success",
+                        scrollbarPadding: false,
+                    })
                 }
                 )
         }
@@ -66,10 +76,19 @@ const Modal = (props: any) => {
                 timeforcook: props.state.timeforcook,
                 Hardforwork: props.state.Hardforwork,
                 imgfile: props.state.imgfile,
+            }, {
+                headers: {
+                    authorization: `Bearer ${getToken()}`,
+                    'Content-Type': 'application/json'
+                }
             })
-                .then((res) => {
-                    console.log(res)
-                    props.fetch()
+                .then(async (res) => {
+                    await props.fetch()
+                    Swal.fire({
+                        title: "Update Success",
+                        icon: "success",
+                        scrollbarPadding: false,
+                    })
                 }
                 )
         }
@@ -86,7 +105,7 @@ const Modal = (props: any) => {
 
     return (
 
-        <>
+        <div className='className="min-h-screen flex flex-col"'>
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                 <div className="bg-white p-6 rounded-2xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto ">
                     <h2 className="text-xl font-semibold mb-4  text-center">เพิ่มรายการอาหาร</h2>
@@ -148,7 +167,7 @@ const Modal = (props: any) => {
                     >Close</button>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 export default Modal

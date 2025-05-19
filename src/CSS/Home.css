@@ -12,7 +12,7 @@
     }
 
     .subHeader-welcome1 {
-        @apply text-2xl;
+        @apply text-[43];
         position: relative;
         color: hsl(309, 8%, 51%);
         font-weight: bold !important;
@@ -21,7 +21,9 @@
         overflow: hidden;
         border-right: 2px solid hsl(0, 0%, 80%);
         white-space: nowrap;
-        animation: typewriter 3s steps(44) 1s 1 normal both,
+        max-width: 100%;
+        width: fit-content;
+        animation: typewriter 3s steps(22) 1s forwards,
             blinkTextCursor 350ms infinite;
     }
 
@@ -82,11 +84,11 @@
 
     @keyframes typewriter {
         from {
-            width: 0;
+            width: 0ch;
         }
 
         to {
-            width: 285px;
+            width: 20ch;
         }
     }
 
@@ -133,7 +135,7 @@
         }
     }
 
-    
+
 
     .popupmodalselect {
         animation-name: fadeInDown;
@@ -144,10 +146,7 @@
 
 
     @media only screen and (max-width: 900px) {
-        .subHeader-welcome1 {
-            @apply text-lg;
-            animation: typewriter 4s steps(44) 1s 1 normal both,
-        }
+        
 
         .subHeader-welcome2 {
             @apply text-base;
@@ -186,10 +185,7 @@
     }
 
     @media only screen and (max-width: 500px) {
-        .subHeader-welcome1 {
-            @apply text-base;
-            animation: typewriter 4s steps(44) 1s 1 normal both,
-        }
+        
 
         .subHeader-welcome2 {
             @apply text-xs;

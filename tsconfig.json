@@ -23,5 +23,5 @@
   },
   "include": [
     "src"
-  ]
+, "../Backend_pea_website/Component/Route/AuthController"  ]
 }
