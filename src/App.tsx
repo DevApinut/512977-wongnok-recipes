@@ -9,7 +9,7 @@ const App = () => {
     <>
       <Navbar1 />
       <div className='grow'>
-
+        
       </div>
       <Footer />
 

@@ -15,5 +15,8 @@ COPY . .
 # Expose React's default port
 EXPOSE 3000
 
+ENV CHOKIDAR_USEPOLLING=true
+
 # Start the development server
 CMD ["npm", "start"]
+

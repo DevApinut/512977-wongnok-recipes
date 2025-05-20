@@ -17,7 +17,7 @@ const MenuCrud = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        document.title = 'รายการเมนู | List of Menu';
+        document.title = 'รายการเมนู | List of Menu ';
         const updateFavicon = (iconURL: string) => {
             // Remove existing favicon links
             const existingIcons = document.querySelectorAll('link[rel="icon"]');
