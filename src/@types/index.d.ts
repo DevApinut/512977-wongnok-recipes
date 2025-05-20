@@ -7,7 +7,7 @@ declare module 'react-loading';
 declare module 'react-pdf-viewer';
 declare module 'edit-office-files';
 declare module 'react-star-ratings';
-declare module 'mini/src/Component/Content/Template/FM0.docx';
+declare module 'react-google-recaptcha';
 
 // declaration.d.ts
 // declare module '*.scss' {

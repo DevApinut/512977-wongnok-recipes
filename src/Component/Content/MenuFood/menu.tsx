@@ -1,20 +1,44 @@
 import Navbar1 from "../Navbar/Navbar1"
 import Footer from "../Footer/Footer"
 import Modal from "./Addmenu"
-import { useEffect, useReducer } from "react"
+import { useEffect, useReducer, useState } from "react"
 import axios from "axios"
-import { Link } from "react-router-dom"
+import { Link, useParams, useNavigate } from "react-router-dom"
 import StarRatings from 'react-star-ratings';
 import { getToken, getusername } from "../Loginreg/Service_login"
 import Swal from "sweetalert2"
+import Pagination from "../Homepage/Pageselect"
+import dowload from '../../image/black-chef-icon_602006-3234.avif'
 
 
 
 const MenuCrud = () => {
+    const { page } = useParams()
+    const navigate = useNavigate()
 
     useEffect(() => {
+        document.title = 'รายการเมนู | List of Menu';
+        const updateFavicon = (iconURL: string) => {
+            // Remove existing favicon links
+            const existingIcons = document.querySelectorAll('link[rel="icon"]');
+            existingIcons.forEach(icon => icon.parentNode?.removeChild(icon));
+
+            // Create new link element
+            const newIcon = document.createElement('link');
+            newIcon.rel = 'icon';
+            // Add cache buster query param to force refresh
+            newIcon.href = iconURL + '?v=' + new Date().getTime();
+
+            document.head.appendChild(newIcon);
+        };
+        updateFavicon(dowload);
         fetch()
+        if (!page || Number(page) < 1 || page === undefined) {
+            navigate('/About/Menu/1', { replace: true });
+        }
     }, [])
+
+
 
 
     const initials = {
@@ -33,6 +57,7 @@ const MenuCrud = () => {
         ratingofFood: "",
         ratingforgive: 0,
         dataFromfetch: [],
+        dataFrompage: [],
         findData: "",
         findstar: 0
 
@@ -67,6 +92,13 @@ const MenuCrud = () => {
             .then((result: any) => {
                 console.log(result)
                 dispatch({ type: "setstate", payload: { name: "dataFromfetch", value: [...result.data.res] } })
+                if (Number(page) > Number(((result.data.res.length) / 4) + 1) || !page || Number(page) < 1 || page === undefined) {
+                    navigate('/About/Menu/1', { replace: true });
+                    dispatch({ type: "setstate", payload: { name: "dataFrompage", value: result.data.res.slice((Number(1) - 1) * 4, Number(1) * 4) } })
+                } else {
+                    navigate(`/About/Menu/${page}`, { replace: true });
+                    dispatch({ type: "setstate", payload: { name: "dataFrompage", value: result.data.res.slice((Number(page) - 1) * 4, Number(page) * 4) } })
+                }
             })
     }
     const finddata = (data: any = "") => {
@@ -111,6 +143,13 @@ const MenuCrud = () => {
     }
 
 
+
+    const handlePageChange = (selectpage: number) => {
+        navigate(`/About/Menu/${selectpage}`)
+        dispatch({ type: "setstate", payload: { name: "dataFrompage", value: state.dataFromfetch.slice((Number(selectpage) - 1) * 4, Number(selectpage) * 4) } })
+    };
+
+
     return (
         <div className="min-h-screen flex flex-col">
             <Navbar1 />
@@ -124,7 +163,7 @@ const MenuCrud = () => {
                     {getusername() && <div className="justify-self-start grow">
                         <div className="mx-2 btn btn-success" onClick={() => setdatafromprops("Menuadd", true)}>เพิ่มรายการอาหาร </div>
                     </div>}
-                    
+
                     <div className="lg:w-1/2 flex">
                         <input type="text" className="border w-full text-center rounded-xl" placeholder="SeachData....." onChange={(e) => {
                             finddata(e.target.value)
@@ -143,8 +182,8 @@ const MenuCrud = () => {
 
 
 
-                <div className="sm:flex sm:flex-wrap sm:justify-center sm:items-center md:flex md:flex-wrap md:justify-start md:items-center lg:flex lg:flex-wrap lg:justify-start lg:items-center">
-                    {state.dataFromfetch.map((data: any, index: number) => {
+                <div className="grow sm:flex sm:flex-wrap sm:justify-center sm:items-center md:flex md:flex-wrap md:justify-start md:items-center lg:flex lg:flex-wrap lg:justify-start lg:items-center">
+                    {state.dataFrompage.map((data: any, index: number) => {
                         return (
                             <div className="lg:w-1/4 lg:h-200 md:w-1/2 md:h-200  sm:w-full  sm:h-200 py-3 px-2 flex flex-col">
                                 <div className="border h-full px-2 rounded-xl">
@@ -214,7 +253,14 @@ const MenuCrud = () => {
                 </div>
 
 
+                <div className="w-full flex justify-center items-center">
 
+                    <Pagination
+                        currentPage={Number(page)}
+                        totalPages={Math.floor(Number(state.dataFromfetch.length) / 4) + 1}
+                        onPageChange={handlePageChange}
+                    />
+                </div>
 
 
             </div >
@@ -225,3 +271,7 @@ const MenuCrud = () => {
 }
 
 export default MenuCrud
+
+
+
+

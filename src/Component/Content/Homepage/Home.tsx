@@ -2,35 +2,22 @@ import { useNavigate } from "react-router-dom";
 import Navbar1 from "../Navbar/Navbar1"
 import Footer from "../Footer/Footer"
 import { Fade, Slide } from 'react-slideshow-image';
+import axios from "axios";
+import { getToken } from "../Loginreg/Service_login";
 import 'react-slideshow-image/dist/styles.css'
 // menu food picture
-import padtai from '../../image/padtai.jpg'
-import kangsom from '../../image/kangsom.webp'
-import somtum from '../../image/somtum.jpg'
-import kangpa from '../../image/kangpa.jpg'
-
-import pako from '../../image/pako.jpg'
-import smila from '../../image/smilar.jpg'
-import longkang from '../../image/longkang.jpg'
-import namgrung from '../../image/nangrum.jpg'
-
-import vild1 from '../../image/vild1.webp'
-import vild2 from '../../image/vild2.webp'
-import vild3 from '../../image/vild3.webp'
-import vild4 from '../../image/vild4.webp'
-import vild5 from '../../image/vild5.jpg'
-
-import Food from '../../image/Food.jpg'
-
+import smila from '../../image/Free-Food-PowerPoint-Template-About-Us.jpg'
+import vild1 from '../../image/Free-Food-PowerPoint-Template-Services.jpg'
+import vild5 from '../../image/Free-Food-Template-For-PowerPoint-Title-Slides.jpg'
+import Food from '../../image/free-food-powerpoint-template-jpg.webp'
+import dowload from '../../image/black-chef-icon_602006-3234.avif'
 import ShowData from "./showpicdata";
 
 
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faPlay, faChevronRight } from "@fortawesome/free-solid-svg-icons"
+
+import { useState, useEffect, useReducer } from "react";
 
 const Home = () => {
 
@@ -39,7 +26,41 @@ const Home = () => {
 
     useEffect(() => {
         document.title = 'หน้าหลัก | Home Page';
+        const updateFavicon = (iconURL: string) => {
+            // Remove existing favicon links
+            const existingIcons = document.querySelectorAll('link[rel="icon"]');
+            existingIcons.forEach(icon => icon.parentNode?.removeChild(icon));
+
+            // Create new link element
+            const newIcon = document.createElement('link');
+            newIcon.rel = 'icon';
+            // Add cache buster query param to force refresh
+            newIcon.href = iconURL + '?v=' + new Date().getTime();
+
+            document.head.appendChild(newIcon);
+        };
+        updateFavicon(dowload);
+        fetch()
+        fetchrating()
     }, []);
+
+    const initials = {
+        datafromrating: [],
+        datafromlasted: []
+
+    }
+    const reducer = (state: any, action: any) => {
+        switch (action.type) {
+            case "setstate":
+                return {
+                    ...state,
+                    [action.payload.name]: action.payload.value
+                }
+        }
+    }
+
+    const [state, dispatch] = useReducer(reducer, initials)
+
 
     const class_select_border = Headernew.map((data: any, index: number) => {
         if (data == false) {
@@ -67,16 +88,16 @@ const Home = () => {
     }
     const slideImages = [
         {
-            url: `${vild1}`,
+            url: `${Food}`,
             caption: '/Dashboard',
 
         },
         {
-            url: `${Food}`,
+            url: `${smila}`,
             caption: 'Slide 2'
         },
         {
-            url: `${smila}`,
+            url: `${vild1}`,
             caption: 'Slide 3'
         },
         {
@@ -90,6 +111,36 @@ const Home = () => {
         array[number] = true
         console.log(array)
         setHeadernew(array)
+    }
+
+
+    const fetch = (data: any = "", rating: Number = 0) => {
+        axios.get(`${process.env.REACT_APP_API}/GetMenu`, {
+            params: {
+                data: data,
+                rating: Number(rating)
+            },
+            headers: {
+                authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json'
+            }
+        }
+        )
+            .then((result: any) => {
+                dispatch({ type: "setstate", payload: { name: "datafromlasted", value: result.data.res } })
+            })
+    }
+    const fetchrating = () => {
+        axios.get(`${process.env.REACT_APP_API}/GetMenuRating`, {
+            headers: {
+                authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((result: any) => {
+                console.log(result)
+                dispatch({ type: "setstate", payload: { name: "datafromrating", value: result.data.res } })
+            })
     }
 
 
@@ -117,17 +168,19 @@ const Home = () => {
                                 <div className={`subHeader-news ${class_select_border[1]} lg:w-36 md:w-1/2 sm:w-1/2 xs:w-1/2 text-center`} onClick={(e) => { handle_select_header_news(1) }}>คะเเนนสูงสุด</div>
                             </div>
 
-                            {Headernew[0] && <div className="container-news relative flex justify-center">
-                                <ShowData img={somtum} />
-                                <ShowData img={somtum} />
-                                <ShowData img={somtum} />
-                                <ShowData img={somtum} />
+                            {Headernew[0] && <div className="container-news relative flex justify-start">
+                                {state.datafromlasted.length >= 1 && <ShowData state={state.datafromlasted} index={0} />}
+                                {state.datafromlasted.length >= 2 && <ShowData state={state.datafromlasted} index={1} />}
+                                {state.datafromlasted.length >= 3 && <ShowData state={state.datafromlasted} index={2} />}
+                                {state.datafromlasted.length >= 4 && <ShowData state={state.datafromlasted} index={3} />}
+
+
                             </div>}
-                            {Headernew[1] && <div className="container-news relative flex justify-center">
-                                <ShowData img={padtai} />
-                                <ShowData img={padtai} />
-                                <ShowData img={padtai} />
-                                <ShowData img={padtai} />
+                            {Headernew[1] && <div className="container-news relative flex justify-start">
+                                {state.datafromrating.length >= 1 && <ShowData state={state.datafromrating} index={0} />}
+                                {state.datafromrating.length >= 2 && <ShowData state={state.datafromrating} index={1} />}
+                                {state.datafromrating.length >= 3 && <ShowData state={state.datafromrating} index={2} />}
+                                {state.datafromrating.length >= 4 && <ShowData state={state.datafromrating} index={3} />}
                             </div>}
 
 

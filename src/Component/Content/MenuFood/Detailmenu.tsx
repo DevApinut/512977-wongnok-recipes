@@ -42,7 +42,13 @@ const Detailmenu = () => {
 
     const fetch = () => {
         console.log(id)
-        axios.post(`${process.env.REACT_APP_API}/FineoneMenu`, { ID: id })
+        axios.post(`${process.env.REACT_APP_API}/FineoneMenu`, { ID: id }, {
+            headers: {
+                authorization: `Bearer ${getToken()}`,
+                'Content-Type': 'application/json'
+            }
+        }
+        )
             .then((result: any) => {
                 console.log(result)
                 dispatch({ type: "setstate", payload: { name: "nameofFood", value: result.data.res.nameofFood } })
@@ -131,7 +137,9 @@ const Detailmenu = () => {
     return (
         <div className="min-h-screen flex flex-col">
             <Navbar1 />
-            <div className="grow container">
+            {!state.imgfile && <div className="grow container">
+            </div>}
+            {state.imgfile && <div className="grow container">
                 <div className="text justify-center text-center text-xl font-bold"> {`เมนู ${state.nameofFood}`}</div>
                 <div className="mt-2 flex justify-center flex-col items-center w-full">
                     <img src={state.imgfile} alt="Preview" width={"100%"} className="max-w-xs rounded shadow" />
@@ -187,10 +195,10 @@ const Detailmenu = () => {
 
                 </div>
                 <div className="items-end  flex justify-start" >
-                    <Link to={`/About/Menu`} className="btn btn-dark my-2 justify-self-end">กลับหน้าเเรก</Link>
+                    <Link to={`/About/Menu/1`} className="btn btn-dark my-2 justify-self-end">กลับหน้าเเรก</Link>
                 </div>
 
-            </div>
+            </div>}
             <Footer />
         </div>
     )

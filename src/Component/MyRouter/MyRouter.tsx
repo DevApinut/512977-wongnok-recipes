@@ -21,6 +21,7 @@ const Myrouter = () => {
                 <Route path="/Register" element={<RedirectHome Component={Register} />} />
                 <Route path="/Forgetpassword" Component={Forgetpassword} />               
                 <Route path="/About/Menu" Component={MenuCrud} />
+                <Route path="/About/Menu/:page" Component={MenuCrud} />
                 <Route path="/About/Menu/detail/:id" Component={Detailmenu} />
 
 

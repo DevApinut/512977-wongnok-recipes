@@ -6,6 +6,7 @@ import Footer from "../Footer/Footer";
 import axios from "axios";
 import { authenticate } from "./Service_login"
 import Swal from 'sweetalert2'
+import ReCAPTCHA from "react-google-recaptcha";
 
 
 const Login = () => {
@@ -16,7 +17,8 @@ const Login = () => {
         username: "",
         password: "",
         show_password: false,
-        style_error_login: ""
+        style_error_login: "",
+        recapcha: ""
     }
 
 
@@ -77,6 +79,15 @@ const Login = () => {
     useEffect(() => {
         document.title = 'เข้าสู่ระบบ | Login';
     }, [])
+
+
+    const recaptcha = (token: any) => {
+
+        dispatch({
+            type: "setstate",
+            payload: { name: "recapcha", value: token }
+        })
+    }
     return (
         <>
             <div className="border container-class flex flex-col">
@@ -105,11 +116,18 @@ const Login = () => {
                                     })} />
                                     <div className="mx-2">แสดงรหัสผ่าน</div>
                                 </div>
-                                <div className="flex justify-center w-full mt-4">
-                                    <button className="mx-4 border w-full text-center p-2 rounded-xl 
-                                    bg-green-400 hover:cursor-pointer hover:text-slate-50"
-                                    >เข้าสู่ระบบ</button>
+                                <div className="mt-2">
+                                    <ReCAPTCHA
+                                        sitekey="6LdH9EArAAAAAEtjhavRjNmNPMPffMGcqvMoWryD"
+                                        onChange={recaptcha}
+                                    />                                    
                                 </div>
+
+                                {state.recapcha && <div className="flex justify-center w-full mt-4">
+                                    <button className="mx-4 border w-full text-center p-2 rounded-xl 
+                                    bg-green-400 hover:cursor-pointer hover:text-slate-50" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                                    >เข้าสู่ระบบ</button>
+                                </div>}
                             </form>
 
                             <hr></hr>
