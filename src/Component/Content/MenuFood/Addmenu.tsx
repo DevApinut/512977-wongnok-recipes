@@ -33,6 +33,7 @@ const Modal = (props: any) => {
         reader.onloadend = () => {
 
             props.setstatedis("imgfile", reader.result)
+            // props.setstatedis("imgfile", e.target.files?.[0])
         };
         reader.readAsDataURL(file); // Converts file to base64 string
     };
@@ -55,6 +56,7 @@ const Modal = (props: any) => {
                 }
             })
                 .then(async (res) => {
+                    console.log(res)
                     await props.fetch()
                     Swal.fire({
                         title: "Create Success",
@@ -83,6 +85,7 @@ const Modal = (props: any) => {
                 }
             })
                 .then(async (res) => {
+                    console.log(res)
                     await props.fetch()
                     Swal.fire({
                         title: "Update Success",
@@ -94,6 +97,7 @@ const Modal = (props: any) => {
         }
 
     }
+    
 
     const changeclock = (valuefromtarget: string) => {
         const value = valuefromtarget;
@@ -153,7 +157,7 @@ const Modal = (props: any) => {
                             <div>ภาพเเสดง</div>
                         </div>}
 
-                    </div>
+                    </div>    
 
                     <button className="mt-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-blue-700 mx-2"
                         onClick={() => arrangedata()}
@@ -165,6 +169,7 @@ const Modal = (props: any) => {
                         }
                         }
                     >Close</button>
+
                 </div>
             </div>
         </div>

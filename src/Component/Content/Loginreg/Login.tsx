@@ -116,6 +116,13 @@ const Login = () => {
                                     })} />
                                     <div className="mx-2">แสดงรหัสผ่าน</div>
                                 </div>
+
+                                {/* <div className="mt-2">
+                                    <ReCAPTCHA
+                                        sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                                        onChange={recaptcha}
+                                    />                                    
+                                </div> */}
                                 <div className="mt-2">
                                     <ReCAPTCHA
                                         sitekey="6LdH9EArAAAAAEtjhavRjNmNPMPffMGcqvMoWryD"
