@@ -116,13 +116,15 @@ const Login = () => {
                                     })} />
                                     <div className="mx-2">แสดงรหัสผ่าน</div>
                                 </div>
-
-                                <div className="mt-2">
+                                {/* for test recapcha */}
+                                {/* <div className="mt-2">
                                     <ReCAPTCHA
                                         sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
                                         onChange={recaptcha}
-                                    />                                    
-                                </div>
+                                    />
+                                </div> */}
+
+                                {/* for use deploy */}
                                 {/* <div className="mt-2">
                                     <ReCAPTCHA
                                         sitekey="6LdH9EArAAAAAEtjhavRjNmNPMPffMGcqvMoWryD"
@@ -130,11 +132,16 @@ const Login = () => {
                                     />                                    
                                 </div> */}
 
-                                {state.recapcha && <div className="flex justify-center w-full mt-4">
+                                {/* {state.recapcha && <div className="flex justify-center w-full mt-4">
                                     <button className="mx-4 border w-full text-center p-2 rounded-xl 
                                     bg-green-400 hover:cursor-pointer hover:text-slate-50" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
                                     >เข้าสู่ระบบ</button>
-                                </div>}
+                                </div>} */}
+                                 <div className="flex justify-center w-full mt-4">
+                                    <button className="mx-4 border w-full text-center p-2 rounded-xl 
+                                    bg-green-400 hover:cursor-pointer hover:text-slate-50"
+                                    >เข้าสู่ระบบ</button>
+                                </div>
                             </form>
 
                             <hr></hr>
