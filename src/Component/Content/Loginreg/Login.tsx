@@ -117,18 +117,18 @@ const Login = () => {
                                     <div className="mx-2">แสดงรหัสผ่าน</div>
                                 </div>
 
-                                {/* <div className="mt-2">
+                                <div className="mt-2">
                                     <ReCAPTCHA
                                         sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
                                         onChange={recaptcha}
                                     />                                    
-                                </div> */}
-                                <div className="mt-2">
+                                </div>
+                                {/* <div className="mt-2">
                                     <ReCAPTCHA
                                         sitekey="6LdH9EArAAAAAEtjhavRjNmNPMPffMGcqvMoWryD"
                                         onChange={recaptcha}
                                     />                                    
-                                </div>
+                                </div> */}
 
                                 {state.recapcha && <div className="flex justify-center w-full mt-4">
                                     <button className="mx-4 border w-full text-center p-2 rounded-xl 
